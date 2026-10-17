@@ -1,0 +1,30 @@
+{
+  "name": "document-to-form",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Распознавание карточки организации, проверка полей и перенос в форму в браузере",
+  "author": "Alexander Shulgin",
+  "license": "MIT",
+  "type": "module",
+  "engines": { "node": "^20.19.0 || >=22.12.0" },
+  "scripts": {
+    "prepare:ocr": "node scripts/prepare-ocr.mjs",
+    "predev": "npm run prepare:ocr",
+    "dev": "vite --host 127.0.0.1",
+    "prebuild": "npm run prepare:ocr",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "tsx --test tests/*.test.ts",
+    "test:ocr": "tsx scripts/ocr-smoke.ts",
+    "fixtures": "node scripts/generate-fixtures.mjs"
+  },
+  "dependencies": { "tesseract.js": "7.0.0" },
+  "devDependencies": {
+    "@tesseract.js-data/eng": "1.0.0",
+    "@tesseract.js-data/rus": "1.0.0",
+    "sharp": "0.34.5",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "vite": "8.3.4"
+  }
+}

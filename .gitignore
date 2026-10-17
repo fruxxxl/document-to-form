@@ -1,0 +1,6 @@
+node_modules/
+dist/
+public/ocr/
+public/licenses/
+.ocr-cache/
+.DS_Store
