@@ -1,52 +1,155 @@
 <!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Открытый пример: распознайте карточку организации, проверьте ИНН и перенесите данные в форму. Документ обрабатывается в браузере." />
-  <meta name="theme-color" content="#f4f2eb" />
-  <title>Из документа в форму · PROCESA</title>
-</head>
-<body>
-  <header class="shell masthead"><a href="https://procesa.ru/" class="brand">ПРОЦЕС<span>А</span></a><span>Открытый инструмент</span></header>
-  <main class="shell">
-    <section class="intro" aria-labelledby="title">
-      <p class="eyebrow">Документ → проверка → форма</p>
-      <h1 id="title">Три поля.<br>Без перепечатывания.</h1>
-      <p class="lead">Загрузите карточку организации. Программа прочитает название, ИНН и КПП. Вы сверите их с документом и перенесёте в форму.</p>
-      <p class="privacy">Распознавание работает в вашем браузере. Файл не отправляется на сервер. При первом запуске браузер загрузит модели распознавания с этого сайта.</p>
-    </section>
-    <div class="workspace">
-      <section class="panel document" aria-labelledby="document-title">
-        <div class="section-heading"><span class="step">01</span><h2 id="document-title">Возьмите документ</h2></div>
-        <label class="upload" for="file">Выбрать изображение<input id="file" type="file" accept="image/png,image/jpeg,image/webp" /></label>
-        <p class="hint">PNG, JPG или WebP, до 10 МБ. Одна карточка юрлица с подписями «Наименование», «ИНН», «КПП». PDF пока не поддерживается.</p>
-        <div class="examples" aria-label="Вымышленные примеры"><p>Или попробуйте на примере:</p><div class="example-buttons"><button type="button" data-example="clean">Чёткий документ</button><button type="button" data-example="tilted">Неровное фото</button><button type="button" data-example="incomplete">Ошибка и пропуск</button></div></div>
-        <figure id="preview-wrap" hidden><img id="preview" alt="Выбранная карточка организации, исходный документ для проверки" /><figcaption id="filename"></figcaption></figure>
-        <div class="actions"><button type="button" class="primary" id="recognize" disabled>Прочитать документ</button><button type="button" id="cancel" hidden>Отменить</button><button type="button" id="reset" hidden>Начать заново</button></div>
-        <p id="status" role="status" aria-live="polite">Выберите файл или один из примеров.</p>
-        <progress id="progress" max="1" value="0" aria-label="Ход распознавания" hidden></progress>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Открытый пример: распознайте карточку организации, проверьте ИНН и перенесите данные в форму. Документ обрабатывается в браузере."
+    />
+    <meta name="theme-color" content="#f4f2eb" />
+    <title>Из документа в форму · PROCESA</title>
+  </head>
+  <body>
+    <header class="shell masthead">
+      <a href="https://procesa.ru/" class="brand">ПРОЦЕС<span>А</span></a
+      ><span>Открытый инструмент</span>
+    </header>
+    <main class="shell">
+      <section class="intro" aria-labelledby="title">
+        <p class="eyebrow">Документ → проверка → форма</p>
+        <h1 id="title">Три поля.<br />Без перепечатывания.</h1>
+        <p class="lead">
+          Загрузите карточку организации. Программа прочитает название, ИНН и
+          КПП. Вы сверите их с документом и перенесёте в форму.
+        </p>
+        <p class="privacy">
+          Распознавание работает в вашем браузере. Файл не отправляется на
+          сервер. При первом запуске браузер загрузит модели распознавания с
+          этого сайта.
+        </p>
       </section>
-      <section class="panel review" aria-labelledby="review-title">
-        <div class="section-heading"><span class="step">02</span><h2 id="review-title">Проверьте поля</h2></div>
-        <p class="hint" id="review-hint">После распознавания здесь появятся поля и фрагменты прочитанного текста. Значения можно исправить.</p>
-        <form id="review-form" hidden novalidate>
-          <div id="fields"></div>
-          <p class="hint">Контрольная цифра помогает найти опечатку в ИНН. Совпадение не подтверждает существование организации. КПП проверяется только по формату.</p>
-          <button type="submit" class="primary" id="transfer" disabled>Перенести проверенные поля</button>
-        </form>
-        <details id="raw-wrap" hidden><summary>Весь распознанный текст</summary><pre id="raw"></pre></details>
+      <div class="workspace">
+        <section class="panel document" aria-labelledby="document-title">
+          <div class="section-heading">
+            <span class="step">01</span>
+            <h2 id="document-title">Возьмите документ</h2>
+          </div>
+          <label class="upload" for="file"
+            >Выбрать изображение<input
+              id="file"
+              type="file"
+              accept="image/png,image/jpeg,image/webp"
+          /></label>
+          <p class="hint">
+            PNG, JPG или WebP, до 10 МБ. Одна карточка юрлица с подписями
+            «Наименование», «ИНН», «КПП». PDF пока не поддерживается.
+          </p>
+          <div class="examples" aria-label="Вымышленные примеры">
+            <p>Или попробуйте на примере:</p>
+            <div class="example-buttons">
+              <button type="button" data-example="clean">Чёткий документ</button
+              ><button type="button" data-example="tilted">Неровное фото</button
+              ><button type="button" data-example="incomplete">
+                Ошибка и пропуск
+              </button>
+            </div>
+          </div>
+          <figure id="preview-wrap" hidden>
+            <img
+              id="preview"
+              alt="Выбранная карточка организации, исходный документ для проверки"
+            />
+            <figcaption id="filename"></figcaption>
+          </figure>
+          <div class="actions">
+            <button type="button" class="primary" id="recognize" disabled>
+              Прочитать документ</button
+            ><button type="button" id="cancel" hidden>Отменить</button
+            ><button type="button" id="reset" hidden>Начать заново</button>
+          </div>
+          <p id="status" role="status" aria-live="polite">
+            Выберите файл или один из примеров.
+          </p>
+          <progress
+            id="progress"
+            max="1"
+            value="0"
+            aria-label="Ход распознавания"
+            hidden
+          ></progress>
+        </section>
+        <section class="panel review" aria-labelledby="review-title">
+          <div class="section-heading">
+            <span class="step">02</span>
+            <h2 id="review-title">Проверьте поля</h2>
+          </div>
+          <p class="hint" id="review-hint">
+            После распознавания здесь появятся поля и фрагменты прочитанного
+            текста. Значения можно исправить.
+          </p>
+          <form id="review-form" hidden novalidate>
+            <div id="fields"></div>
+            <p class="hint">
+              Контрольная цифра помогает найти опечатку в ИНН. Совпадение не
+              подтверждает существование организации. КПП проверяется только по
+              формату.
+            </p>
+            <button type="submit" class="primary" id="transfer" disabled>
+              Перенести проверенные поля
+            </button>
+          </form>
+          <details id="raw-wrap" hidden>
+            <summary>Весь распознанный текст</summary>
+            <pre id="raw"></pre>
+          </details>
+        </section>
+      </div>
+      <section
+        class="panel result"
+        id="result"
+        aria-labelledby="result-title"
+        hidden
+      >
+        <div class="section-heading">
+          <span class="step">03</span>
+          <h2 id="result-title" tabindex="-1">Форма заполнена</h2>
+        </div>
+        <p>
+          Это демонстрационная форма. Данные никуда не отправляются. Можно
+          скопировать результат или сохранить JSON.
+        </p>
+        <div class="result-fields">
+          <label>Название организации<input id="result-name" readonly /></label
+          ><label>ИНН<input id="result-inn" readonly /></label
+          ><label>КПП<input id="result-kpp" readonly /></label>
+        </div>
+        <div class="actions">
+          <button type="button" id="copy">Скопировать данные</button
+          ><button type="button" id="download">Скачать JSON</button>
+        </div>
+        <p id="export-status" role="status"></p>
       </section>
-    </div>
-    <section class="panel result" id="result" aria-labelledby="result-title" hidden>
-      <div class="section-heading"><span class="step">03</span><h2 id="result-title" tabindex="-1">Форма заполнена</h2></div>
-      <p>Это демонстрационная форма. Данные никуда не отправляются. Можно скопировать результат или сохранить JSON.</p>
-      <div class="result-fields"><label>Название организации<input id="result-name" readonly /></label><label>ИНН<input id="result-inn" readonly /></label><label>КПП<input id="result-kpp" readonly /></label></div>
-      <div class="actions"><button type="button" id="copy">Скопировать данные</button><button type="button" id="download">Скачать JSON</button></div><p id="export-status" role="status"></p>
-    </section>
-    <section class="closing"><h2>Такой перенос нужен в вашей работе?</h2><p>Это один небольшой сценарий. В рабочем проекте нужно учесть ваши документы, поля и программу, в которой работает сотрудник.</p><a href="https://procesa.ru/contacts/">Рассказать о своей задаче →</a></section>
-  </main>
-  <footer class="shell"><p>Александр Шульгин · PROCESA · <a href="https://github.com/fruxxxl/document-to-form">Исходный код</a> · <a href="./licenses/third-party.txt">Компоненты и лицензии</a></p><p>Демо использует OCR. Примеры созданы для проверки и не относятся к реальным организациям.</p></footer>
-  <script type="module" src="/src/main.ts"></script>
-</body>
+      <section class="closing">
+        <h2>Такой перенос нужен в вашей работе?</h2>
+        <p>
+          Это один небольшой сценарий. В рабочем проекте нужно учесть ваши
+          документы, поля и программу, в которой работает сотрудник.
+        </p>
+        <a href="https://procesa.ru/contacts/">Рассказать о своей задаче →</a>
+      </section>
+    </main>
+    <footer class="shell">
+      <p>
+        Александр Шульгин · PROCESA ·
+        <a href="https://github.com/fruxxxl/document-to-form">Исходный код</a> ·
+        <a href="./licenses/third-party.txt">Компоненты и лицензии</a>
+      </p>
+      <p>
+        Демо использует OCR. Примеры созданы для проверки и не относятся к
+        реальным организациям.
+      </p>
+    </footer>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
