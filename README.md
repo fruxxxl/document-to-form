@@ -2,7 +2,7 @@
 
 Небольшой открытый инструмент для переноса реквизитов из изображения карточки организации. Браузер распознаёт текст, выделяет название, ИНН и КПП. Пользователь сверяет поля с исходником, исправляет ошибки и подтверждает перенос в демонстрационную форму.
 
-[Открыть инструмент](https://fruxxxl.github.io/document-to-form/) · [Об авторе](https://procesa.ru/about/) · [Автоматизация ваших документов](https://procesa.ru/services/form-filling/)
+[Открыть инструмент](https://fruxxxl.github.io/document-to-form/)
 
 English: a browser-only OCR example for Russian company cards. Extract three labelled fields, review the source text, confirm each value, and fill a demonstration form. Documents stay in the browser; OCR assets are served from the same origin.
 
@@ -52,6 +52,6 @@ npm run test:ocr
 
 ## Автор и лицензии
 
-Александр Шульгин, [PROCESA](https://procesa.ru/about/). Разработка инструментов для бизнеса, интеграции и автоматизация документов.
+Автор: [Александр Шульгин](https://github.com/fruxxxl).
 
 Код проекта распространяется по [MIT](LICENSE). Сторонние библиотеки и языковые модели имеют собственные лицензии; ссылки приведены в [THIRD-PARTY.md](THIRD-PARTY.md).
